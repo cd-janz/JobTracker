@@ -1,0 +1,25 @@
+services:
+  job_tracker_db:
+    image: postgres:16-alpine3.17
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=job_tracker
+    volumes:
+      - job_tracker_data:/var/lib/postgresql/data
+
+  job_tracker_cache_db:
+    image: redis:8-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass redis
+    volumes:
+      - job_tracker_cache:/data
+
+volumes:
+  job_tracker_data:
+  job_tracker_cache:
