@@ -2,11 +2,10 @@ package com.janz.job_tracker.controllers;
 
 import com.janz.job_tracker.models.ApiResponse;
 import com.janz.job_tracker.models.dto.request.CreateUserDTO;
+import com.janz.job_tracker.models.dto.request.RecoveryPasswordDTO;
 import com.janz.job_tracker.models.dto.request.RequestLoginDTO;
-import com.janz.job_tracker.models.dto.request.ValidateEmailDTO;
 import com.janz.job_tracker.models.dto.response.LoginResponseDTO;
 import com.janz.job_tracker.services.UserServices;
-import com.janz.job_tracker.utils.ValidationUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,4 +38,12 @@ public class PublicController {
                 .then(Mono.fromCallable(() -> new ApiResponse.Builder<Void>()
                         .message("User registered successfully").build()));
     }
+
+    @PostMapping("recovery")
+    public Mono<ApiResponse<Void>> recovery(@Valid @RequestBody RecoveryPasswordDTO user){
+        return _userServices.recoveryPassword(user.email)
+                .then(Mono.fromCallable(() -> new ApiResponse.Builder<Void>()
+                        .message("Recovery code sent successfully").build()));
+    }
+
 }

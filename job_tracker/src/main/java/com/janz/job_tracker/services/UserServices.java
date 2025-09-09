@@ -8,4 +8,5 @@ import reactor.core.publisher.Mono;
 public interface UserServices {
     Mono<LoginResponseDTO> login(RequestLoginDTO user);
     Mono<Void> registerUser(CreateUserDTO user);
+    Mono<Void> recoveryPassword(String email);
 }

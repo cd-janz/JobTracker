@@ -10,6 +10,9 @@ import com.janz.job_tracker.repositories.UserRepository;
 import com.janz.job_tracker.use_cases.UserUseCases;
 import com.janz.job_tracker.utils.CryptographyUtils;
 import lombok.AllArgsConstructor;
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -19,6 +22,7 @@ import reactor.core.publisher.Mono;
 public class UserUseCasesImpl implements UserUseCases {
 
     private final UserRepository _userRepository;
+    private final Logger logger = LoggerFactory.getLogger(UserUseCasesImpl.class);
 
     @Override
     public Mono<UserEntity> validateUserCredentials(RequestLoginDTO user) {
@@ -40,6 +44,13 @@ public class UserUseCasesImpl implements UserUseCases {
                     return _userRepository.save(userEntity);
                 }))
                 .then();
+    }
+
+    @Override
+    public Mono<Void> sendVerificationCode(String email) {
+        logger.info("Sending verification code for email {}", email);
+        //TODO: Implement that
+        return null;
     }
 
     private Mono<Void> validateEmailAble(String email) {

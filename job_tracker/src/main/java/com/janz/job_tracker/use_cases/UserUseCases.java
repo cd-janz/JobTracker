@@ -9,4 +9,5 @@ import reactor.core.publisher.Mono;
 public interface UserUseCases {
     Mono<UserEntity> validateUserCredentials(RequestLoginDTO user);
     Mono<Void> createUser(CreateUserDTO user, UserMapper userMapper);
+    Mono<Void> sendVerificationCode(String email);
 }

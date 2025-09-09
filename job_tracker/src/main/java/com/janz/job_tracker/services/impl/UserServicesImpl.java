@@ -36,4 +36,10 @@ public class UserServicesImpl implements UserServices {
         return _userUseCases.createUser(user, _userMapper);
     }
 
+    @Override
+    public Mono<Void> recoveryPassword(String email) {
+        ValidationUtil.validate_email(email);
+        return _userUseCases.sendVerificationCode(email);
+    }
+
 }
